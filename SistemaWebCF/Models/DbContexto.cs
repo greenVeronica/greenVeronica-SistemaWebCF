@@ -29,30 +29,40 @@ namespace SistemaWebCF.Models
             modelBuilder.Entity<Categoria>(entidad =>
             {
                 entidad.ToTable("categoria");
+
                 entidad.HasKey(primaria => primaria.idcategoria);
+
                 entidad.Property(propiedad => propiedad.idcategoria).HasColumnName("idcategoria");
+
+                
+
                 entidad.Property(propiedad => propiedad.nombre)
                 .HasColumnName("nombre")
                 .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false);//quiere decir que se almacenara como varchar y no nvarchar
+
                 entidad.Property(propiedad => propiedad.descripcion)
                .HasColumnName("descripcion")
                .HasMaxLength(255)
                .IsUnicode(false);//quiere decir que se almacenara como varchar y no nvarchar
-                entidad.Property(propiedad => propiedad.estado)
-             .HasColumnName("estado")
-             .HasDefaultValueSql("((1))");
-           
 
+                entidad.Property(propiedad => propiedad.estado)
+                .HasColumnName("estado")
+                .HasDefaultValueSql("((1))");
+           
             });
 
             modelBuilder.Entity<Producto>(entidad =>
             {
                 entidad.ToTable("producto");
+
                 entidad.HasKey(primaria => primaria.idproducto);
+
                 entidad.Property(propiedad => propiedad.idproducto).HasColumnName("idproducto");
+
                 entidad.Property(propiedad => propiedad.idcategoria).HasColumnName("idcategoria");
+
                 entidad.Property(propiedad => propiedad.codigo)
                .HasColumnName("codigo")
                .HasMaxLength(64)
@@ -86,11 +96,11 @@ namespace SistemaWebCF.Models
                 .HasColumnName("estado")
                 .HasDefaultValueSql("((1))");
 
-                entidad.HasOne(p =>p.categoria)//de la tabla producto
-                .WithMany(c =>c.productos) //de la tabla categoria
+                entidad.HasOne(p => p.categoria)//de la tabla producto
+                .WithMany(c => c.productos) //de la tabla categoria
                 .HasForeignKey(f => f.idcategoria)
                 .OnDelete(DeleteBehavior.ClientSetNull)//sin eliminacion
-                .HasConstraintName("FK_producto_categoria")
+                .HasConstraintName("FK_producto_categoria");
 
 
             });
